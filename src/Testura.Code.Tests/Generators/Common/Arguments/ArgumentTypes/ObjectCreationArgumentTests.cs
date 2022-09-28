@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
+
+using System.Collections.Generic;
+using Code.Generators.Common.Arguments.ArgumentTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
-
-namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
 
 [TestFixture]
 public class ObjectCreationArgumentTests
@@ -31,7 +31,12 @@ public class ObjectCreationArgumentTests
     [Test]
     public void GetArgumentSyntax_WhenInitializeClassWithArgument_ShouldGetCorrectCode()
     {
-        var argument = new ObjectCreationArgument(typeof(string), new List<IArgument> { new ValueArgument(0) });
+        var argument = new ObjectCreationArgument(
+            typeof(string),
+            new List<IArgument>
+            {
+                new ValueArgument(0)
+            });
         var syntax = argument.GetArgumentSyntax();
 
         Assert.IsInstanceOf<ArgumentSyntax>(syntax);
@@ -59,9 +64,15 @@ public class ObjectCreationArgumentTests
     }
 
     [Test]
-    public void GetArgumentSyntax_WhenInitializeClassWithMultipleGenericAsArgument_ShouldGetCorrectCode()
+    public void
+        GetArgumentSyntax_WhenInitializeClassWithMultipleGenericAsArgument_ShouldGetCorrectCode()
     {
-        var argument = new ObjectCreationArgument(typeof(List), genericTypes: new[] { typeof(List<List<int>>) });
+        var argument = new ObjectCreationArgument(
+            typeof(List),
+            genericTypes: new[]
+            {
+                typeof(List<List<int>>)
+            });
         var syntax = argument.GetArgumentSyntax();
 
         Assert.IsInstanceOf<ArgumentSyntax>(syntax);

@@ -1,7 +1,7 @@
 ﻿namespace Testura.Code.Statements;
 
 /// <summary>
-/// Provides a way to generate different statements.
+///     Provides a way to generate different statements.
 /// </summary>
 public static class Statement
 {
@@ -15,27 +15,27 @@ public static class Statement
     }
 
     /// <summary>
-    /// Gets generator for deceleration statements.
+    ///     Gets generator for deceleration statements.
     /// </summary>
     public static DeclarationStatement Declaration { get; }
 
     /// <summary>
-    /// Gets the generator for jump statements.
+    ///     Gets the generator for jump statements.
     /// </summary>
     public static JumpStatement Jump { get; }
 
     /// <summary>
-    /// Gets the generator for selection statements.
+    ///     Gets the generator for selection statements.
     /// </summary>
     public static SelectionStatement Selection { get; }
 
     /// <summary>
-    /// Gets the generator for iteration statements.
+    ///     Gets the generator for iteration statements.
     /// </summary>
     public static IterationStatement Iteration { get; }
 
     /// <summary>
-    /// Gets the generator for expression statements.
+    ///     Gets the generator for expression statements.
     /// </summary>
     public static ExpressionStatement Expression { get; }
 }

@@ -1,15 +1,20 @@
-﻿using NUnit.Framework;
-using Testura.Code.Models.References;
+﻿namespace Testura.Code.Tests.Models.References;
 
-namespace Testura.Code.Tests.Models.References;
+using Code.Models.References;
+using NUnit.Framework;
 
 [TestFixture]
 public class VariableReferenceTests
 {
     [Test]
-    public void GetLastMember_WhenHavingNoChild_ShouldReturnNull()
+    public void GetLastMember_WhenHavingChainOfMember_ShouldReturnLastMemberInChain()
     {
-        Assert.IsNull(new VariableReference("test").GetLastMember());
+        var memberReference = new MemberReference("test");
+
+        Assert.AreSame(
+            memberReference,
+            new VariableReference("test", new MethodReference("test", memberReference))
+                .GetLastMember());
     }
 
     [Test]
@@ -17,14 +22,14 @@ public class VariableReferenceTests
     {
         var memberReference = new MemberReference("test");
 
-        Assert.AreSame(memberReference, new VariableReference("test", memberReference).GetLastMember());
+        Assert.AreSame(
+            memberReference,
+            new VariableReference("test", memberReference).GetLastMember());
     }
 
     [Test]
-    public void GetLastMember_WhenHavingChainOfMember_ShouldReturnLastMemberInChain()
+    public void GetLastMember_WhenHavingNoChild_ShouldReturnNull()
     {
-        var memberReference = new MemberReference("test");
-
-        Assert.AreSame(memberReference, new VariableReference("test", new MethodReference("test", memberReference)).GetLastMember());
+        Assert.IsNull(new VariableReference("test").GetLastMember());
     }
 }

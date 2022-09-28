@@ -1,14 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Testura.Code.Builders.BuildMembers;
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 public class RegionBuildMember : IBuildMember
 {
-    private readonly string _regionName;
     private readonly IEnumerable<IBuildMember> _members;
+    private readonly string _regionName;
 
     public RegionBuildMember(string regionName, IEnumerable<IBuildMember> members)
     {
@@ -16,7 +17,8 @@ public class RegionBuildMember : IBuildMember
         _members = members;
     }
 
-    public SyntaxList<MemberDeclarationSyntax> AddMember(SyntaxList<MemberDeclarationSyntax> members)
+    public SyntaxList<MemberDeclarationSyntax> AddMember(
+        SyntaxList<MemberDeclarationSyntax> members)
     {
         if (!_members.Any())
         {
@@ -41,27 +43,30 @@ public class RegionBuildMember : IBuildMember
         return members;
     }
 
-    public SyntaxList<MemberDeclarationSyntax> AddStartRegion(SyntaxList<MemberDeclarationSyntax> newMembersSyntaxList)
+    public SyntaxList<MemberDeclarationSyntax> AddEndRegion(
+        SyntaxList<MemberDeclarationSyntax> newMembersSyntaxList)
+    {
+        var modifiedLastMember = newMembersSyntaxList.Last()
+            .WithTrailingTrivia(TriviaList(Trivia(EndRegionDirectiveTrivia(true))));
+
+        return newMembersSyntaxList.Replace(newMembersSyntaxList.Last(), modifiedLastMember);
+    }
+
+    public SyntaxList<MemberDeclarationSyntax> AddStartRegion(
+        SyntaxList<MemberDeclarationSyntax> newMembersSyntaxList)
     {
         // A bit hackish.. see if there are a better solution.
-        var modifiedFirstMember = newMembersSyntaxList
-            .First()
+        var modifiedFirstMember = newMembersSyntaxList.First()
             .WithLeadingTrivia(
                 TriviaList(
                     Trivia(
                         RegionDirectiveTrivia(true)
                             .WithEndOfDirectiveToken(
-                                Token(TriviaList(PreprocessingMessage($" {_regionName} \n")), SyntaxKind.EndOfDirectiveToken, TriviaList())))));
+                                Token(
+                                    TriviaList(PreprocessingMessage($" {_regionName} \n")),
+                                    SyntaxKind.EndOfDirectiveToken,
+                                    TriviaList())))));
 
         return newMembersSyntaxList.Replace(newMembersSyntaxList.First(), modifiedFirstMember);
-    }
-
-    public SyntaxList<MemberDeclarationSyntax> AddEndRegion(SyntaxList<MemberDeclarationSyntax> newMembersSyntaxList)
-    {
-        var modifiedLastMember = newMembersSyntaxList
-            .Last()
-            .WithTrailingTrivia(TriviaList(Trivia(EndRegionDirectiveTrivia(true))));
-
-        return newMembersSyntaxList.Replace(newMembersSyntaxList.Last(), modifiedLastMember);
     }
 }

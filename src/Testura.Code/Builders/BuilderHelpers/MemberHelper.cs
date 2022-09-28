@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Builders.BuildMembers;
+﻿namespace Testura.Code.Builders.BuilderHelpers;
 
-namespace Testura.Code.Builders.BuilderHelpers;
+using BuildMembers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 internal class MemberHelper
 {
@@ -16,6 +16,7 @@ internal class MemberHelper
     public MemberHelper AddMembers(params IBuildMember[] members)
     {
         Members.AddRange(members);
+
         return this;
     }
 

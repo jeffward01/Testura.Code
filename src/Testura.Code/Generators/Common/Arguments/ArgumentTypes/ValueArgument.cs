@@ -1,17 +1,18 @@
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Extensions;
 #pragma warning disable 1591
 
 namespace Testura.Code.Generators.Common.Arguments.ArgumentTypes;
 
+using Extensions;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 /// <summary>
-/// Provides the functionality to generate simple value arguments.
+///     Provides the functionality to generate simple value arguments.
 /// </summary>
 public class ValueArgument : Argument
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ValueArgument"/> class.
+    ///     Initializes a new instance of the <see cref="ValueArgument" /> class.
     /// </summary>
     /// <param name="value">Value to send in as an argument.</param>
     /// <param name="namedArgument">Specify the argument for a particular parameter.</param>
@@ -32,12 +33,13 @@ public class ValueArgument : Argument
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ValueArgument"/> class.
+    ///     Initializes a new instance of the <see cref="ValueArgument" /> class.
     /// </summary>
     /// <param name="value">String value to send in as an argument.</param>
     /// <param name="stringType">The type of string.</param>
     /// <param name="namedArgument">Specify the argument for a particular parameter.</param>
-    public ValueArgument(string value, StringType stringType = StringType.Normal, string namedArgument = null)
+    public ValueArgument(
+        string value, StringType stringType = StringType.Normal, string namedArgument = null)
         : base(namedArgument)
     {
         if (value == null)
@@ -49,7 +51,7 @@ public class ValueArgument : Argument
     }
 
     /// <summary>
-    /// Gets the value sent in as an argument.
+    ///     Gets the value sent in as an argument.
     /// </summary>
     public object Value { get; }
 
@@ -57,7 +59,10 @@ public class ValueArgument : Argument
     {
         if (Value is bool)
         {
-            return SyntaxFactory.Argument(SyntaxFactory.IdentifierName(Value.ToString().ToLower()));
+            return SyntaxFactory.Argument(
+                SyntaxFactory.IdentifierName(
+                    Value.ToString()
+                        .ToLower()));
         }
 
         return SyntaxFactory.Argument(SyntaxFactory.IdentifierName(Value.ToString()));

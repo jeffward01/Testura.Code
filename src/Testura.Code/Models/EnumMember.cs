@@ -1,12 +1,12 @@
 ﻿namespace Testura.Code.Models;
 
 /// <summary>
-/// Represent a enum member.
+///     Represent a enum member.
 /// </summary>
 public class EnumMember
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="EnumMember"/> class.
+    ///     Initializes a new instance of the <see cref="EnumMember" /> class.
     /// </summary>
     /// <param name="name">Name of the enum member</param>
     /// <param name="value">Value of the enum member</param>
@@ -19,17 +19,17 @@ public class EnumMember
     }
 
     /// <summary>
-    /// Gets or sets the name of the enum member.
+    ///     Gets or sets the name of the enum member.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the value of the enum member.
+    ///     Gets or sets the value of the enum member.
     /// </summary>
     public int? Value { get; set; }
 
     /// <summary>
-    /// Gets or sets the attributes of the enum member.
+    ///     Gets or sets the attributes of the enum member.
     /// </summary>
     public IEnumerable<Attribute>? Attributes { get; set; }
 }

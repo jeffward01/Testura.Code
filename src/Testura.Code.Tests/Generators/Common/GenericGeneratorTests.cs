@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿namespace Testura.Code.Tests.Generators.Common;
 
-namespace Testura.Code.Tests.Generators.Common;
+using NUnit.Framework;
 
 [TestFixture]
 public class GenericGeneratorTests

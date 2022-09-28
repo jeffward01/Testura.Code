@@ -1,86 +1,37 @@
-﻿using NUnit.Framework;
-using Testura.Code.Generators.Common;
-using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
-using Testura.Code.Generators.Common.BinaryExpressions;
-using Testura.Code.Models.References;
-using Testura.Code.Statements;
-using Assert = NUnit.Framework.Assert;
+﻿namespace Testura.Code.Tests.Statements;
 
-namespace Testura.Code.Tests.Statements;
+using Code.Generators.Common;
+using Code.Generators.Common.Arguments.ArgumentTypes;
+using Code.Generators.Common.BinaryExpressions;
+using Code.Models.References;
+using Code.Statements;
+using NUnit.Framework;
 
 [TestFixture]
 public class SelectionStatementTests
 {
-    private SelectionStatement conditional;
-
     [OneTimeSetUp]
     public void SetUp()
     {
-        conditional = new SelectionStatement();
+        _conditional = new SelectionStatement();
     }
 
-    [Test]
-    public void If_WhenCreatingAnIfWithEqual_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2==3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.Equal, BodyGenerator.Create()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithEqualAndExpressionStatement_ShouldGenerateCorrectIfStatementWithoutBraces()
-    {
-        Assert.AreEqual(
-            "if(2==3)MyMethod();",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.Equal, Statement.Expression.Invoke("MyMethod").AsStatement()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithNotEqual_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2!=3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.NotEqual, BodyGenerator.Create()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithGreaterThan_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2>3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.GreaterThan, BodyGenerator.Create()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithGreaterThanOrEqual_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2>=3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.GreaterThanOrEqual, BodyGenerator.Create()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithLessThan_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2<3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.LessThan, BodyGenerator.Create()).ToString());
-    }
-
-    [Test]
-    public void If_WhenCreatingAnIfWithLessThanOrEqual_ShouldGenerateCorrectIfStatement()
-    {
-        Assert.AreEqual(
-            "if(2<=3){}",
-            conditional.If(new ValueArgument(2), new ValueArgument(3), ConditionalStatements.LessThanOrEqual, BodyGenerator.Create()).ToString());
-    }
+#pragma warning disable SA1201
+    private SelectionStatement _conditional;
+#pragma warning restore SA1201
 
     [Test]
     public void If_WhenCreatingAnBinaryExpression_ShouldGenerateCorrectIfStatement()
     {
         Assert.AreEqual(
             "if(2<=3){}",
-            conditional.If(new ConditionalBinaryExpression(new ConstantReference(2), new ConstantReference(3), ConditionalStatements.LessThanOrEqual), BodyGenerator.Create()).ToString());
+            _conditional.If(
+                    new ConditionalBinaryExpression(
+                        new ConstantReference(2),
+                        new ConstantReference(3),
+                        ConditionalStatements.LessThanOrEqual),
+                    BodyGenerator.Create())
+                .ToString());
     }
 
     [Test]
@@ -100,20 +51,120 @@ public class SelectionStatementTests
             leftBinaryExpression,
             rightBinaryExpression);
 
-        var binaryExpression = new OrBinaryExpression(
-            leftBinaryExpression,
-            orBinaryExpression);
+        var binaryExpression = new OrBinaryExpression(leftBinaryExpression, orBinaryExpression);
 
         Assert.AreEqual(
             "if(1==2||1==2||1<2){}",
-            conditional.If(binaryExpression, BodyGenerator.Create()).ToString());
+            _conditional.If(binaryExpression, BodyGenerator.Create())
+                .ToString());
     }
 
     [Test]
-    public void If_WhenCreatingAnIfWithBinaryExpressionAndExpressionStatement_ShouldGenerateCorrectIfStatementWithoutBraces()
+    public void
+        If_WhenCreatingAnIfWithBinaryExpressionAndExpressionStatement_ShouldGenerateCorrectIfStatementWithoutBraces()
     {
         Assert.AreEqual(
             "if(2==3)MyMethod();",
-            conditional.If(new ConditionalBinaryExpression(new ConstantReference(2), new ConstantReference(3), ConditionalStatements.Equal), Statement.Expression.Invoke("MyMethod").AsStatement()).ToString());
+            _conditional.If(
+                    new ConditionalBinaryExpression(
+                        new ConstantReference(2),
+                        new ConstantReference(3),
+                        ConditionalStatements.Equal),
+                    Statement.Expression.Invoke("MyMethod")
+                        .AsStatement())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithEqual_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2==3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.Equal,
+                    BodyGenerator.Create())
+                .ToString());
+    }
+
+    [Test]
+    public void
+        If_WhenCreatingAnIfWithEqualAndExpressionStatement_ShouldGenerateCorrectIfStatementWithoutBraces()
+    {
+        Assert.AreEqual(
+            "if(2==3)MyMethod();",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.Equal,
+                    Statement.Expression.Invoke("MyMethod")
+                        .AsStatement())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithGreaterThan_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2>3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.GreaterThan,
+                    BodyGenerator.Create())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithGreaterThanOrEqual_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2>=3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.GreaterThanOrEqual,
+                    BodyGenerator.Create())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithLessThan_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2<3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.LessThan,
+                    BodyGenerator.Create())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithLessThanOrEqual_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2<=3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.LessThanOrEqual,
+                    BodyGenerator.Create())
+                .ToString());
+    }
+
+    [Test]
+    public void If_WhenCreatingAnIfWithNotEqual_ShouldGenerateCorrectIfStatement()
+    {
+        Assert.AreEqual(
+            "if(2!=3){}",
+            _conditional.If(
+                    new ValueArgument(2),
+                    new ValueArgument(3),
+                    ConditionalStatements.NotEqual,
+                    BodyGenerator.Create())
+                .ToString());
     }
 }

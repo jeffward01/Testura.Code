@@ -1,18 +1,19 @@
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 #pragma warning disable 1591
 
 namespace Testura.Code.Generators.Common.Arguments.ArgumentTypes;
 
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 /// <summary>
-/// Provides the functionality to generate a <c>typeOf(..)</c> argument
+///     Provides the functionality to generate a <c>typeOf(..)</c> argument
 /// </summary>
 public class TypeOfArgument : Argument
 {
     private readonly Type _type;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="TypeOfArgument"/> class.
+    ///     Initializes a new instance of the <see cref="TypeOfArgument" /> class.
     /// </summary>
     /// <param name="type">The type inside the <c>typeOf</c>.</param>
     /// <param name="namedArgument">Specify the argument for a particular parameter.</param>

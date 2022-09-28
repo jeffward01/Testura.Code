@@ -2,12 +2,12 @@
 namespace Testura.Code.Models.References;
 
 /// <summary>
-/// Represent a <c>value</c> keyword reference.
+///     Represent a <c>value</c> keyword reference.
 /// </summary>
 public class ValueKeywordReference : VariableReference
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ValueKeywordReference"/> class.
+    ///     Initializes a new instance of the <see cref="ValueKeywordReference" /> class.
     /// </summary>
     public ValueKeywordReference()
         : base("value")

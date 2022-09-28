@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Testura.Code.Generators.Common.BinaryExpressions;
-using Testura.Code.Models.References;
+﻿namespace Testura.Code.Tests.Generators.Common.BinaryExpressions;
 
-namespace Testura.Code.Tests.Generators.Common.BinaryExpressions;
+using Code.Generators.Common.BinaryExpressions;
+using Code.Models.References;
+using NUnit.Framework;
 
 [TestFixture]
 public class ConditionalBinaryExpressionTests
@@ -14,6 +14,9 @@ public class ConditionalBinaryExpressionTests
             new ConstantReference(1),
             new ConstantReference(2),
             ConditionalStatements.Equal);
-        Assert.AreEqual("1==2", binaryExpression.GetBinaryExpression().ToString());
+        Assert.AreEqual(
+            "1==2",
+            binaryExpression.GetBinaryExpression()
+                .ToString());
     }
 }

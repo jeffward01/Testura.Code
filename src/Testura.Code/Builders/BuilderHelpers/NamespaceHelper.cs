@@ -1,13 +1,14 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Testura.Code.Builders.BuilderHelpers;
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 internal class NamespaceHelper
 {
-    private readonly NamespaceType _namespaceType;
     private readonly string _name;
+    private readonly NamespaceType _namespaceType;
 
     public NamespaceHelper(string name, NamespaceType namespaceType)
     {
@@ -15,33 +16,51 @@ internal class NamespaceHelper
         _namespaceType = namespaceType;
     }
 
-    public CompilationUnitSyntax BuildNamespace(CompilationUnitSyntax @base, params MemberDeclarationSyntax[] members)
+    public CompilationUnitSyntax BuildNamespace(
+        CompilationUnitSyntax @base, params MemberDeclarationSyntax[] members)
     {
         switch (_namespaceType)
         {
             case NamespaceType.Classic:
-                return @base.WithMembers(SingletonList<MemberDeclarationSyntax>(NamespaceDeclaration(IdentifierName(_name)).AddMembers(members)));
+                return @base.WithMembers(
+                    SingletonList<MemberDeclarationSyntax>(
+                        NamespaceDeclaration(IdentifierName(_name))
+                            .AddMembers(members)));
 
             case NamespaceType.FileScoped:
-                return @base.WithMembers(SingletonList<MemberDeclarationSyntax>(FileScopedNamespaceDeclaration(IdentifierName(_name)).AddMembers(members)));
+                return @base.WithMembers(
+                    SingletonList<MemberDeclarationSyntax>(
+                        FileScopedNamespaceDeclaration(IdentifierName(_name))
+                            .AddMembers(members)));
 
             default:
-                throw new ArgumentOutOfRangeException("NameSpaceType", "Not supported namespace type");
+                throw new ArgumentOutOfRangeException(
+                    "NameSpaceType",
+                    "Not supported namespace type");
         }
     }
 
-    public CompilationUnitSyntax BuildNamespace(CompilationUnitSyntax @base, SyntaxList<MemberDeclarationSyntax> members)
+    public CompilationUnitSyntax BuildNamespace(
+        CompilationUnitSyntax @base, SyntaxList<MemberDeclarationSyntax> members)
     {
         switch (_namespaceType)
         {
             case NamespaceType.Classic:
-                return @base.WithMembers(SingletonList<MemberDeclarationSyntax>(NamespaceDeclaration(IdentifierName(_name)).WithMembers(members)));
+                return @base.WithMembers(
+                    SingletonList<MemberDeclarationSyntax>(
+                        NamespaceDeclaration(IdentifierName(_name))
+                            .WithMembers(members)));
 
             case NamespaceType.FileScoped:
-                return @base.WithMembers(SingletonList<MemberDeclarationSyntax>(FileScopedNamespaceDeclaration(IdentifierName(_name)).WithMembers(members)));
+                return @base.WithMembers(
+                    SingletonList<MemberDeclarationSyntax>(
+                        FileScopedNamespaceDeclaration(IdentifierName(_name))
+                            .WithMembers(members)));
 
             default:
-                throw new ArgumentOutOfRangeException("NameSpaceType", "Not supported namespace type");
+                throw new ArgumentOutOfRangeException(
+                    "NameSpaceType",
+                    "Not supported namespace type");
         }
     }
 }

@@ -1,19 +1,19 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Models.Types;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-using DateTimeOffset = System.DateTimeOffset;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Testura.Code.Generators.Common;
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Models.Types;
+
 /// <summary>
-/// Provides functionality to generate predefined and custom types.
+///     Provides functionality to generate predefined and custom types.
 /// </summary>
 public static class TypeGenerator
 {
     /// <summary>
-    /// Create the syntax for a type.
+    ///     Create the syntax for a type.
     /// </summary>
     /// <param name="type">The type to create.</param>
     /// <returns>The declared type syntax.</returns>
@@ -29,12 +29,12 @@ public static class TypeGenerator
 
         if (type.IsArray)
         {
-            return
-                ArrayType(Create(type.GetElementType()))
-                    .WithRankSpecifiers(
-                        SingletonList(
-                            ArrayRankSpecifier(
-                                SingletonSeparatedList<ExpressionSyntax>(OmittedArraySizeExpression()))));
+            return ArrayType(Create(type.GetElementType()))
+                .WithRankSpecifiers(
+                    SingletonList(
+                        ArrayRankSpecifier(
+                            SingletonSeparatedList<ExpressionSyntax>(
+                                OmittedArraySizeExpression()))));
         }
 
         if (type.IsGenericType && type.GetGenericTypeDefinition() != typeof(Nullable<>))
@@ -43,6 +43,7 @@ public static class TypeGenerator
         }
 
         var typeSyntax = CheckPredefinedTypes(type);
+
         return typeSyntax ?? ParseTypeName(type.Name);
     }
 
@@ -152,9 +153,11 @@ public static class TypeGenerator
 
     private static TypeSyntax CreateGenericType(Type type)
     {
-        return
-            GenericName(Identifier(type.Name[..type.Name.LastIndexOf("`", StringComparison.Ordinal)])).WithTypeArgumentList(TypeArgumentList(
-                SeparatedList<TypeSyntax>(GetGenericTypes(type.GetGenericArguments()))));
+        return GenericName(
+                Identifier(type.Name[..type.Name.LastIndexOf("`", StringComparison.Ordinal)]))
+            .WithTypeArgumentList(
+                TypeArgumentList(
+                    SeparatedList<TypeSyntax>(GetGenericTypes(type.GetGenericArguments()))));
     }
 
     private static SyntaxNodeOrToken[] GetGenericTypes(IEnumerable<Type> genericTypes)
@@ -167,6 +170,7 @@ public static class TypeGenerator
         }
 
         list.RemoveAt(list.Count - 1);
+
         return list.ToArray();
     }
 }

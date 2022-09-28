@@ -3,7 +3,7 @@
 internal static class ValueTypeNameFormatting
 {
     /// <summary>
-    /// Get the value type in a correct string format
+    ///     Get the value type in a correct string format
     /// </summary>
     /// <param name="type">Generic type to format</param>
     /// <returns>The formatted type name</returns>

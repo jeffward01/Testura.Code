@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
+
+using System.Collections.Generic;
+using Code.Generators.Common.Arguments.ArgumentTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
-
-namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
 
 [TestFixture]
 public class ArrayInitializeArgumentTests
@@ -11,7 +11,13 @@ public class ArrayInitializeArgumentTests
     [Test]
     public void GetArgumentSyntax_WhenUsingIntArray_ShouldGetCorrectCode()
     {
-        var argument = new ArrayInitializationArgument(typeof(int), new List<IArgument>() { new ValueArgument(1), new ValueArgument(2) });
+        var argument = new ArrayInitializationArgument(
+            typeof(int),
+            new List<IArgument>
+            {
+                new ValueArgument(1),
+                new ValueArgument(2)
+            });
         var syntax = argument.GetArgumentSyntax();
 
         Assert.IsInstanceOf<ArgumentSyntax>(syntax);
@@ -21,7 +27,14 @@ public class ArrayInitializeArgumentTests
     [Test]
     public void GetArgumentSyntax_WhenUsingIntArrayAndAsNamedArgument_ShouldGetCorrectCode()
     {
-        var argument = new ArrayInitializationArgument(typeof(int), new List<IArgument>() { new ValueArgument(1), new ValueArgument(2) }, "namedArgument");
+        var argument = new ArrayInitializationArgument(
+            typeof(int),
+            new List<IArgument>
+            {
+                new ValueArgument(1),
+                new ValueArgument(2)
+            },
+            "namedArgument");
         var syntax = argument.GetArgumentSyntax();
 
         Assert.IsInstanceOf<ArgumentSyntax>(syntax);

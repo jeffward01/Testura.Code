@@ -1,22 +1,19 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Generators.Common;
-using Testura.Code.Models;
-using Attribute = Testura.Code.Models.Attribute;
+﻿namespace Testura.Code.Builders.BuildMembers;
 
-namespace Testura.Code.Builders.BuildMembers;
+using Generators.Common;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Models;
 
 public class EnumBuildMember : IBuildMember
 {
-    private readonly string _name;
+    private readonly IEnumerable<Attribute> _attributes;
     private readonly IEnumerable<EnumMember> _members;
     private readonly IEnumerable<Modifiers> _modifiers;
-    private readonly IEnumerable<Attribute> _attributes;
+    private readonly string _name;
 
     public EnumBuildMember(
-        string name,
-        IEnumerable<EnumMember> members,
-        IEnumerable<Modifiers> modifiers = null,
+        string name, IEnumerable<EnumMember> members, IEnumerable<Modifiers> modifiers = null,
         IEnumerable<Attribute> attributes = null)
     {
         _name = name;
@@ -25,7 +22,8 @@ public class EnumBuildMember : IBuildMember
         _attributes = attributes;
     }
 
-    public SyntaxList<MemberDeclarationSyntax> AddMember(SyntaxList<MemberDeclarationSyntax> members)
+    public SyntaxList<MemberDeclarationSyntax> AddMember(
+        SyntaxList<MemberDeclarationSyntax> members)
     {
         return members.Add(EnumGenerator.Create(_name, _members, _modifiers, _attributes));
     }

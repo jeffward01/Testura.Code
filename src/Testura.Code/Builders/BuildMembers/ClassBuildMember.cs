@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿namespace Testura.Code.Builders.BuildMembers;
 
-namespace Testura.Code.Builders.BuildMembers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public class ClassBuildMember : IBuildMember
 {
@@ -17,7 +17,8 @@ public class ClassBuildMember : IBuildMember
         _class = @class;
     }
 
-    public SyntaxList<MemberDeclarationSyntax> AddMember(SyntaxList<MemberDeclarationSyntax> members)
+    public SyntaxList<MemberDeclarationSyntax> AddMember(
+        SyntaxList<MemberDeclarationSyntax> members)
     {
         return members.Add(_class);
     }

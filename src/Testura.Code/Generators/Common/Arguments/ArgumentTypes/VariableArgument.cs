@@ -1,16 +1,18 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 namespace Testura.Code.Generators.Common.Arguments.ArgumentTypes;
 
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+
 /// <summary>
-/// Provides the functionality to generate variable argument. Example of generated code: <c>(myVariable)</c>
+///     Provides the functionality to generate variable argument. Example of generated code:
+///     <c>(myVariable)</c>
 /// </summary>
 public class VariableArgument : Argument
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="VariableArgument"/> class.
+    ///     Initializes a new instance of the <see cref="VariableArgument" /> class.
     /// </summary>
     /// <param name="name">Name of the variable</param>
     /// <param name="namedArgument">Specify the argument for a particular parameter</param>
@@ -21,7 +23,7 @@ public class VariableArgument : Argument
     }
 
     /// <summary>
-    /// Gets or sets the name of variable argument
+    ///     Gets or sets the name of variable argument
     /// </summary>
     public string Name { get; set; }
 

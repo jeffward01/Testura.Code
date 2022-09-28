@@ -1,25 +1,27 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+
+namespace Testura.Code.Extensions;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Models;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
-
-namespace Testura.Code.Generators.Special;
+using Models;
 
 /// <summary>
-/// Extension methods to CsharpSyntaxNode.
+///     Extension methods to CsharpSyntaxNode.
 /// </summary>
 public static class CsharpSyntaxNodeExtensions
 {
     /// <summary>
-    /// Create summary to syntax node.
+    ///     Create summary to syntax node.
     /// </summary>
     /// <typeparam name="T">Syntax type.</typeparam>
     /// <param name="syntax">The syntax.</param>
     /// <param name="summary">Summary text.</param>
     /// <param name="parameters">Parameters in the summary</param>
     /// <returns>Return syntax node with summary.</returns>
-    public static T WithSummary<T>(this T syntax, string summary, IEnumerable<Parameter>? parameters = null)
+    public static T WithSummary<T>(
+        this T syntax, string summary, IEnumerable<Parameter>? parameters = null)
         where T : CSharpSyntaxNode
     {
         parameters = parameters ?? new List<Parameter>();
@@ -38,21 +40,61 @@ public static class CsharpSyntaxNodeExtensions
             content = CreateParameterDocumentation(content, parameter);
         }
 
-        content = content.Add(XmlText().WithTextTokens(TokenList(XmlTextNewLine(TriviaList(), "\n", "\n", TriviaList()))));
+        content = content.Add(
+            XmlText()
+                .WithTextTokens(TokenList(XmlTextNewLine(TriviaList(), "\n", "\n", TriviaList()))));
 
         var trivia = Trivia(
-            DocumentationCommentTrivia(
-                SyntaxKind.SingleLineDocumentationCommentTrivia,
-                content));
+            DocumentationCommentTrivia(SyntaxKind.SingleLineDocumentationCommentTrivia, content));
+
         return syntax.WithLeadingTrivia(trivia);
     }
 
-    private static SyntaxList<XmlNodeSyntax> CreateSummaryDocumentation(SyntaxList<XmlNodeSyntax> content, string text)
+    private static SyntaxList<XmlNodeSyntax> CreateParameterDocumentation(
+        SyntaxList<XmlNodeSyntax> content, Parameter parameter)
+    {
+        return content.AddRange(
+            new List<XmlNodeSyntax>
+            {
+                XmlText()
+                    .WithTextTokens(
+                        TokenList(
+                            XmlTextNewLine(TriviaList(), "\n", "\n", TriviaList()),
+                            XmlTextLiteral(
+                                TriviaList(DocumentationCommentExterior("///")),
+                                " ",
+                                " ",
+                                TriviaList()))),
+                XmlExampleElement(
+                        SingletonList<XmlNodeSyntax>(
+                            XmlText()
+                                .WithTextTokens(
+                                    TokenList(
+                                        XmlTextLiteral(
+                                            TriviaList(),
+                                            parameter.XmlDocumentation,
+                                            parameter.XmlDocumentation,
+                                            TriviaList())))))
+                    .WithStartTag(
+                        XmlElementStartTag(XmlName(Identifier("param")))
+                            .WithAttributes(
+                                SingletonList<XmlAttributeSyntax>(
+                                    XmlNameAttribute(
+                                        XmlName(Identifier(" name")),
+                                        Token(SyntaxKind.DoubleQuoteToken),
+                                        IdentifierName(parameter.Name),
+                                        Token(SyntaxKind.DoubleQuoteToken)))))
+                    .WithEndTag(XmlElementEndTag(XmlName(Identifier("param"))))
+            });
+    }
+
+    private static SyntaxList<XmlNodeSyntax> CreateSummaryDocumentation(
+        SyntaxList<XmlNodeSyntax> content, string text)
     {
         var summary = new List<SyntaxToken>();
         summary.Add(XmlTextNewLine(TriviaList(), "\n", "\n", TriviaList()));
         var commentLines = text.Split(new[] { "\n" }, StringSplitOptions.None);
-        for (int n = 0; n < commentLines.Length; n++)
+        for (var n = 0; n < commentLines.Length; n++)
         {
             var fixedCommentLine = $" {commentLines[n]}";
             if (n != commentLines.Length - 1)
@@ -60,63 +102,40 @@ public static class CsharpSyntaxNodeExtensions
                 fixedCommentLine += "\n";
             }
 
-            summary.Add(XmlTextLiteral(TriviaList(DocumentationCommentExterior("///")), fixedCommentLine, fixedCommentLine, TriviaList()));
+            summary.Add(
+                XmlTextLiteral(
+                    TriviaList(DocumentationCommentExterior("///")),
+                    fixedCommentLine,
+                    fixedCommentLine,
+                    TriviaList()));
         }
 
         summary.Add(XmlTextNewLine(TriviaList(), "\n", "\n", TriviaList()));
-        summary.Add(XmlTextLiteral(TriviaList(DocumentationCommentExterior("///")), " ", " ", TriviaList()));
+        summary.Add(
+            XmlTextLiteral(
+                TriviaList(DocumentationCommentExterior("///")),
+                " ",
+                " ",
+                TriviaList()));
 
-        return content.AddRange(new List<XmlNodeSyntax>
-        {
-            XmlText().WithTextTokens(TokenList(XmlTextLiteral(TriviaList(DocumentationCommentExterior("///")), " ", " ", TriviaList()))),
-            XmlElement(XmlElementStartTag(XmlName(Identifier("summary"))), XmlElementEndTag(XmlName(Identifier("summary"))))
-                .WithContent(SingletonList<XmlNodeSyntax>(XmlText().WithTextTokens(TokenList(summary)))),
-        });
-    }
-
-    private static SyntaxList<XmlNodeSyntax> CreateParameterDocumentation(SyntaxList<XmlNodeSyntax> content, Parameter parameter)
-    {
-        return content.AddRange(new List<XmlNodeSyntax>
-        {
-            XmlText().WithTextTokens(
-                TokenList(
-                    new[]
-                    {
-                        XmlTextNewLine(
-                            TriviaList(),
-                            "\n",
-                            "\n",
-                            TriviaList()),
-                        XmlTextLiteral(
-                            TriviaList(
-                                DocumentationCommentExterior("///")),
-                            " ",
-                            " ",
-                            TriviaList())
-                    })),
-            XmlExampleElement(SingletonList<XmlNodeSyntax>(
-                    XmlText().WithTextTokens(
+        return content.AddRange(
+            new List<XmlNodeSyntax>
+            {
+                XmlText()
+                    .WithTextTokens(
                         TokenList(
                             XmlTextLiteral(
-                                TriviaList(),
-                                parameter.XmlDocumentation,
-                                parameter.XmlDocumentation,
-                                TriviaList())))))
-                .WithStartTag(XmlElementStartTag(
-                        XmlName(
-                            Identifier("param")))
-                    .WithAttributes(
-                        SingletonList<XmlAttributeSyntax>(
-                            XmlNameAttribute(
-                                XmlName(
-                                    Identifier(" name")),
-                                Token(SyntaxKind.DoubleQuoteToken),
-                                IdentifierName(parameter.Name),
-                                Token(SyntaxKind.DoubleQuoteToken)))))
-                .WithEndTag(
-                    XmlElementEndTag(
-                        XmlName(
-                            Identifier("param"))))
-        });
+                                TriviaList(DocumentationCommentExterior("///")),
+                                " ",
+                                " ",
+                                TriviaList()))),
+                XmlElement(
+                        XmlElementStartTag(XmlName(Identifier("summary"))),
+                        XmlElementEndTag(XmlName(Identifier("summary"))))
+                    .WithContent(
+                        SingletonList<XmlNodeSyntax>(
+                            XmlText()
+                                .WithTextTokens(TokenList(summary))))
+            });
     }
 }

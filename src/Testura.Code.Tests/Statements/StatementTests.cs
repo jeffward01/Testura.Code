@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Testura.Code.Statements;
+﻿namespace Testura.Code.Tests.Statements;
 
-namespace Testura.Code.Tests.Statements;
+using Code.Statements;
+using NUnit.Framework;
 
 [TestFixture]
 public class StatementTests

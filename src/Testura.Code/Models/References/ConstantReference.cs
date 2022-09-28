@@ -1,15 +1,16 @@
-﻿using Testura.Code.Extensions;
-#pragma warning disable 1591
+﻿#pragma warning disable 1591
 
 namespace Testura.Code.Models.References;
 
+using Extensions;
+
 /// <summary>
-/// Represent the reference to a constant value.
+///     Represent the reference to a constant value.
 /// </summary>
 public class ConstantReference : VariableReference
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstantReference"/> class.
+    ///     Initializes a new instance of the <see cref="ConstantReference" /> class.
     /// </summary>
     /// <param name="value">Value of the constant.</param>
     public ConstantReference(object value)
@@ -22,7 +23,7 @@ public class ConstantReference : VariableReference
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ConstantReference"/> class.
+    ///     Initializes a new instance of the <see cref="ConstantReference" /> class.
     /// </summary>
     /// <param name="value">Value of the constant</param>
     /// <param name="stringType">The type of string to generate.</param>

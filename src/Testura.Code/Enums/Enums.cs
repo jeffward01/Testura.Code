@@ -1,192 +1,194 @@
-﻿namespace Testura.Code;
+﻿// ReSharper disable once CheckNamespace
+
+namespace Testura.Code;
 
 /// <summary>
-/// Describes all possible conditional statements.
+///     Describes all possible conditional statements.
 /// </summary>
 public enum ConditionalStatements
 {
     /// <summary>
-    /// Generate with an equal conditional statement: <c>"="</c>.
+    ///     Generate with an equal conditional statement: <c>"="</c>.
     /// </summary>
     Equal,
 
     /// <summary>
-    /// Generate with an not equal conditional statement: <c>"!="</c>.
+    ///     Generate with an not equal conditional statement: <c>"!="</c>.
     /// </summary>
     NotEqual,
 
     /// <summary>
-    /// Generate with a greater than conditional statement: <c>">"</c>.
+    ///     Generate with a greater than conditional statement: <c>">"</c>.
     /// </summary>
     GreaterThan,
 
     /// <summary>
-    /// Generate with a greater than or equal conditional statement: <c>">="</c>.
+    ///     Generate with a greater than or equal conditional statement: <c>">="</c>.
     /// </summary>
     GreaterThanOrEqual,
 
     /// <summary>
-    /// Generate with a less than conditional statement: <c>"&lt;"</c>.
+    ///     Generate with a less than conditional statement: <c>"&lt;"</c>.
     /// </summary>
     LessThan,
 
     /// <summary>
-    /// Generate with a less than or equal conditional statement: <c>"&lt;="</c>.
+    ///     Generate with a less than or equal conditional statement: <c>"&lt;="</c>.
     /// </summary>
     LessThanOrEqual
 }
 
 /// <summary>
-/// Describes all the possible modifiers.
+///     Describes all the possible modifiers.
 /// </summary>
 public enum Modifiers
 {
     /// <summary>
-    /// Generate with the <c>public</c> modifier.
+    ///     Generate with the <c>public</c> modifier.
     /// </summary>
     Public,
 
     /// <summary>
-    /// Generate with the <c>private</c> modifier.
+    ///     Generate with the <c>private</c> modifier.
     /// </summary>
     Private,
 
     /// <summary>
-    /// Generate with the <c>static</c> modifier.
+    ///     Generate with the <c>static</c> modifier.
     /// </summary>
     Static,
 
     /// <summary>
-    /// Generate with the <c>abstract</c> modifier.
+    ///     Generate with the <c>abstract</c> modifier.
     /// </summary>
     Abstract,
 
     /// <summary>
-    /// Generate with the <c>virtual</c> modifier.
+    ///     Generate with the <c>virtual</c> modifier.
     /// </summary>
     Virtual,
 
     /// <summary>
-    /// Generate with the <c>override</c> modifier.
+    ///     Generate with the <c>override</c> modifier.
     /// </summary>
     Override,
 
     /// <summary>
-    /// Generate with the <c>readonly</c> modifier.
+    ///     Generate with the <c>readonly</c> modifier.
     /// </summary>
     Readonly,
 
     /// <summary>
-    /// Generate with the <c>async</c> modifier.
+    ///     Generate with the <c>async</c> modifier.
     /// </summary>
     Async,
 
     /// <summary>
-    /// Generate with the <c>sealed</c> modifier.
+    ///     Generate with the <c>sealed</c> modifier.
     /// </summary>
     Sealed,
 
     /// <summary>
-    /// Generate with the <c>new</c> modifier.
+    ///     Generate with the <c>new</c> modifier.
     /// </summary>
     New,
 
     /// <summary>
-    /// Generate with the <c>partial</c> modifier.
+    ///     Generate with the <c>partial</c> modifier.
     /// </summary>
     Partial,
 
     /// <summary>
-    /// Generate with the <c>Internal</c> modifier.
+    ///     Generate with the <c>Internal</c> modifier.
     /// </summary>
     Internal,
 
     /// <summary>
-    /// Generate with the <c>Protected</c> modifier.
+    ///     Generate with the <c>Protected</c> modifier.
     /// </summary>
     Protected
 }
 
 /// <summary>
-/// Describes all possible parameter modifiers.
+///     Describes all possible parameter modifiers.
 /// </summary>
 public enum ParameterModifiers
 {
     /// <summary>
-    /// Generate with no modifier.
+    ///     Generate with no modifier.
     /// </summary>
     None,
 
     /// <summary>
-    /// Generate with the <c>out</c> modifier.
+    ///     Generate with the <c>out</c> modifier.
     /// </summary>
     Out,
 
     /// <summary>
-    /// Generate with the <c>ref</c> modifier.
+    ///     Generate with the <c>ref</c> modifier.
     /// </summary>
     Ref,
 
     /// <summary>
-    /// Generate with the <c>this</c> modifier/keyword.
+    ///     Generate with the <c>this</c> modifier/keyword.
     /// </summary>
     This
 }
 
 /// <summary>
-/// Defines different auto property types.
+///     Defines different auto property types.
 /// </summary>
 public enum PropertyTypes
 {
     /// <summary>
-    /// Generate a auto property with only <c>get</c>.
+    ///     Generate a auto property with only <c>get</c>.
     /// </summary>
     Get,
 
     /// <summary>
-    /// Generate a auto property with both <c>get</c> and <c>set</c>.
+    ///     Generate a auto property with both <c>get</c> and <c>set</c>.
     /// </summary>
     GetAndSet
 }
 
 /// <summary>
-/// Defines different ways to generate a string.
+///     Defines different ways to generate a string.
 /// </summary>
 public enum StringType
 {
     /// <summary>
-    /// Generate as a normal string: <c>"test"</c>.
+    ///     Generate as a normal string: <c>"test"</c>.
     /// </summary>
     Normal,
 
     /// <summary>
-    /// Generate as a path: <c>@"test"</c>.
+    ///     Generate as a path: <c>@"test"</c>.
     /// </summary>
     Path
 }
 
 /// <summary>
-/// Describes all all math operators.
+///     Describes all all math operators.
 /// </summary>
 public enum MathOperators
 {
     /// <summary>
-    /// Generate the add (<c>+</c>) operator.
+    ///     Generate the add (<c>+</c>) operator.
     /// </summary>
     Add,
 
     /// <summary>
-    /// Generate the subtract (<c>-</c>) operator.
+    ///     Generate the subtract (<c>-</c>) operator.
     /// </summary>
     Subtract,
 
     /// <summary>
-    /// Generate the divide (<c>/</c>) operator.
+    ///     Generate the divide (<c>/</c>) operator.
     /// </summary>
     Divide,
 
     /// <summary>
-    /// Generate the multiply (<c>*</c>) operator.
+    ///     Generate the multiply (<c>*</c>) operator.
     /// </summary>
     Multiply
 }
@@ -194,12 +196,12 @@ public enum MathOperators
 public enum ConstructorInitializerTypes
 {
     /// <summary>
-    /// Generate constructor initializer with <c>Base</c>
+    ///     Generate constructor initializer with <c>Base</c>
     /// </summary>
     Base,
 
     /// <summary>
-    /// Generate constructor initializer with <c>This</c>
+    ///     Generate constructor initializer with <c>This</c>
     /// </summary>
     This
 }
@@ -207,12 +209,12 @@ public enum ConstructorInitializerTypes
 public enum CommentPosition
 {
     /// <summary>
-    /// Generate comment above statement.
+    ///     Generate comment above statement.
     /// </summary>
     Above,
 
     /// <summary>
-    /// Generate comment to the right of statement.
+    ///     Generate comment to the right of statement.
     /// </summary>
     Right
 }
@@ -245,12 +247,12 @@ internal enum AssertType
 public enum NamespaceType
 {
     /// <summary>
-    /// Classical namespaces
+    ///     Classical namespaces
     /// </summary>
     Classic,
 
     /// <summary>
-    /// File scoped namespaces added in c# 10.0
+    ///     File scoped namespaces added in c# 10.0
     /// </summary>
     FileScoped
 }

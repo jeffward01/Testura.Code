@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Builders.Base;
+﻿namespace Testura.Code.Builders;
 
-namespace Testura.Code.Builders;
+using Base;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public class NamespaceBuilder : BuilderBase<NamespaceBuilder>
 {
@@ -16,7 +16,7 @@ public class NamespaceBuilder : BuilderBase<NamespaceBuilder>
     }
 
     /// <summary>
-    /// Build the namespace and return the generated code.
+    ///     Build the namespace and return the generated code.
     /// </summary>
     /// <returns>The generated class.</returns>
     public CompilationUnitSyntax Build()

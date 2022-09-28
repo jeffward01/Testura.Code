@@ -1,8 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Testura.Code.Builders.BuilderHelpers;
+
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 internal class UsingHelper
 {
@@ -14,7 +15,7 @@ internal class UsingHelper
     public List<string> Usings { get; }
 
     /// <summary>
-    /// Set the using directives.
+    ///     Set the using directives.
     /// </summary>
     /// <param name="usings">A set of wanted using directive names.</param>
     public void AddUsings(params string[] usings)

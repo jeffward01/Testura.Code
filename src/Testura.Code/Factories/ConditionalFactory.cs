@@ -1,6 +1,6 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿namespace Testura.Code.Factories;
 
-namespace Testura.Code.Factories;
+using Microsoft.CodeAnalysis.CSharp;
 
 internal static class ConditionalFactory
 {

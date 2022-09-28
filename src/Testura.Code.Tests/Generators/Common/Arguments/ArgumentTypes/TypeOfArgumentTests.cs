@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NUnit.Framework;
-using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
+﻿namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
 
-namespace Testura.Code.Tests.Generators.Common.Arguments.ArgumentTypes;
+using Code.Generators.Common.Arguments.ArgumentTypes;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using NUnit.Framework;
 
 [TestFixture]
 public class TypeOfArgumentTests

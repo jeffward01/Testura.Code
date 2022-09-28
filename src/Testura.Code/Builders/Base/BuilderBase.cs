@@ -1,16 +1,16 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Builders.BuilderHelpers;
-using Testura.Code.Builders.BuildMembers;
+﻿namespace Testura.Code.Builders.Base;
 
-namespace Testura.Code.Builders.Base;
+using BuilderHelpers;
+using BuildMembers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public abstract class BuilderBase<TBuilder>
     where TBuilder : BuilderBase<TBuilder>
 {
+    private readonly MemberHelper _memberHelper;
     private readonly NamespaceHelper _namespaceHelper;
     private readonly UsingHelper _usingHelper;
-    private readonly MemberHelper _memberHelper;
 
     protected BuilderBase(string @namespace, NamespaceType namespaceType)
     {
@@ -22,24 +22,26 @@ public abstract class BuilderBase<TBuilder>
     protected bool HaveMembers => _memberHelper.Members.Any();
 
     /// <summary>
-    /// Set the using directives.
-    /// </summary>
-    /// <param name="usings">A set of wanted using directive names.</param>
-    /// <returns>The current builder</returns>
-    public TBuilder WithUsings(params string[] usings)
-    {
-        _usingHelper.AddUsings(usings);
-        return (TBuilder)this;
-    }
-
-    /// <summary>
-    /// Add build members that will be generated.
+    ///     Add build members that will be generated.
     /// </summary>
     /// <param name="buildMembers">Build members to add</param>
     /// <returns>The current builder</returns>
     public TBuilder With(params IBuildMember[] buildMembers)
     {
         _memberHelper.AddMembers(buildMembers);
+
+        return (TBuilder)this;
+    }
+
+    /// <summary>
+    ///     Set the using directives.
+    /// </summary>
+    /// <param name="usings">A set of wanted using directive names.</param>
+    /// <returns>The current builder</returns>
+    public TBuilder WithUsings(params string[] usings)
+    {
+        _usingHelper.AddUsings(usings);
+
         return (TBuilder)this;
     }
 
@@ -48,12 +50,14 @@ public abstract class BuilderBase<TBuilder>
         return _usingHelper.BuildUsings(@base);
     }
 
-    protected CompilationUnitSyntax BuildNamespace(CompilationUnitSyntax @base, params MemberDeclarationSyntax[] members)
+    protected CompilationUnitSyntax BuildNamespace(
+        CompilationUnitSyntax @base, params MemberDeclarationSyntax[] members)
     {
         return _namespaceHelper.BuildNamespace(@base, members);
     }
 
-    protected CompilationUnitSyntax BuildNamespace(CompilationUnitSyntax @base, SyntaxList<MemberDeclarationSyntax> members)
+    protected CompilationUnitSyntax BuildNamespace(
+        CompilationUnitSyntax @base, SyntaxList<MemberDeclarationSyntax> members)
     {
         return _namespaceHelper.BuildNamespace(@base, members);
     }

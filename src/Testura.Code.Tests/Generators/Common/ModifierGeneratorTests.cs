@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using Testura.Code.Generators.Common;
+﻿namespace Testura.Code.Tests.Generators.Common;
 
-namespace Testura.Code.Tests.Generators.Common;
+using Code.Generators.Common;
+using NUnit.Framework;
 
 [TestFixture]
 public class ModifierGeneratorTests
@@ -19,14 +19,21 @@ public class ModifierGeneratorTests
     [TestCase(Modifiers.Sealed, "sealed")]
     [TestCase(Modifiers.New, "new")]
     [TestCase(Modifiers.Protected, "protected")]
-    public void Create_WhenCreatingWithModifier_ShouldGenerateCode(Modifiers modifier, string expected)
+    public void Create_WhenCreatingWithModifier_ShouldGenerateCode(
+        Modifiers modifier, string expected)
     {
-        Assert.AreEqual(expected, ModifierGenerator.Create(modifier).ToString());
+        Assert.AreEqual(
+            expected,
+            ModifierGenerator.Create(modifier)
+                .ToString());
     }
 
     [Test]
     public void Create_WhenCreatingWithMultipleModifier_ShouldGenerateCode()
     {
-        Assert.AreEqual("publicabstract", ModifierGenerator.Create(Modifiers.Public, Modifiers.Abstract).ToString());
+        Assert.AreEqual(
+            "publicabstract",
+            ModifierGenerator.Create(Modifiers.Public, Modifiers.Abstract)
+                .ToString());
     }
 }

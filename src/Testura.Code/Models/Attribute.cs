@@ -1,14 +1,14 @@
-﻿using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
+﻿namespace Testura.Code.Models;
 
-namespace Testura.Code.Models;
+using Generators.Common.Arguments.ArgumentTypes;
 
 /// <summary>
-/// Represent an attribute
+///     Represent an attribute
 /// </summary>
 public class Attribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Attribute"/> class.
+    ///     Initializes a new instance of the <see cref="Attribute" /> class.
     /// </summary>
     /// <param name="name">Name of the attribute.</param>
     public Attribute(string name)
@@ -18,7 +18,7 @@ public class Attribute
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Attribute"/> class.
+    ///     Initializes a new instance of the <see cref="Attribute" /> class.
     /// </summary>
     /// <param name="name">Name of the attribute.</param>
     /// <param name="arguments">Arguments sent into the attribute.</param>
@@ -29,12 +29,12 @@ public class Attribute
     }
 
     /// <summary>
-    /// Gets or sets the name of the attribute.
+    ///     Gets or sets the name of the attribute.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the argument to the attribute.
+    ///     Gets or sets the argument to the attribute.
     /// </summary>
     public List<IArgument> Arguments { get; set; }
 }

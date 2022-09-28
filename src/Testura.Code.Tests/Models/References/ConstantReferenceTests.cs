@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Testura.Code.Models.References;
+﻿namespace Testura.Code.Tests.Models.References;
 
-namespace Testura.Code.Tests.Models.References;
+using System;
+using System.Collections.Generic;
+using Code.Models.References;
+using NUnit.Framework;
 
 [TestFixture]
 public class ConstantReferenceTests

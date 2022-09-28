@@ -1,19 +1,18 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Generators.Common;
-using Testura.Code.Generators.Special;
-using Testura.Code.Models;
-using Attribute = Testura.Code.Models.Attribute;
+﻿namespace Testura.Code.Generators.Class;
 
-namespace Testura.Code.Generators.Class;
+using Common;
+using Extensions;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Models;
 
 /// <summary>
-/// Provides functionality to generate class constructors.
+///     Provides functionality to generate class constructors.
 /// </summary>
 public static class ConstructorGenerator
 {
     /// <summary>
-    /// Create the syntax for a class constructor.
+    ///     Create the syntax for a class constructor.
     /// </summary>
     /// <param name="className">Name of the class.</param>
     /// <param name="body">The generated body of the constructor.</param>
@@ -24,13 +23,9 @@ public static class ConstructorGenerator
     /// <param name="summary">XML documentation summary</param>
     /// <returns>The declaration syntax for a constructor.</returns>
     public static ConstructorDeclarationSyntax Create(
-        string className,
-        BlockSyntax body,
-        IEnumerable<Parameter>? parameters = null,
-        IEnumerable<Modifiers>? modifiers = null,
-        IEnumerable<Attribute>? attributes = null,
-        ConstructorInitializer? constructorInitializer = null,
-        string? summary = null)
+        string className, BlockSyntax body, IEnumerable<Parameter>? parameters = null,
+        IEnumerable<Modifiers>? modifiers = null, IEnumerable<Attribute>? attributes = null,
+        ConstructorInitializer? constructorInitializer = null, string? summary = null)
     {
         if (className == null)
         {
@@ -41,20 +36,27 @@ public static class ConstructorGenerator
             .WithBody(body);
         if (parameters != null)
         {
-            constructor = constructor.WithParameterList(ParameterGenerator.Create(parameters.ToArray()));
+            constructor =
+                constructor.WithParameterList(ParameterGenerator.Create(parameters.ToArray()));
         }
 
         if (constructorInitializer != null)
         {
             constructor = constructor.WithInitializer(
                 SyntaxFactory.ConstructorInitializer(
-                    constructorInitializer.ConstructorInitializerType == ConstructorInitializerTypes.Base ? SyntaxKind.BaseConstructorInitializer : SyntaxKind.ThisConstructorInitializer,
-                    constructorInitializer.Arguments == null ? null : ArgumentGenerator.Create(constructorInitializer.Arguments.ToArray())));
+                    constructorInitializer.ConstructorInitializerType ==
+                    ConstructorInitializerTypes.Base
+                        ? SyntaxKind.BaseConstructorInitializer
+                        : SyntaxKind.ThisConstructorInitializer,
+                    constructorInitializer.Arguments == null
+                        ? null
+                        : ArgumentGenerator.Create(constructorInitializer.Arguments.ToArray())));
         }
 
         if (attributes != null)
         {
-            constructor = constructor.WithAttributeLists(AttributeGenerator.Create(attributes.ToArray()));
+            constructor =
+                constructor.WithAttributeLists(AttributeGenerator.Create(attributes.ToArray()));
         }
 
         if (modifiers != null)

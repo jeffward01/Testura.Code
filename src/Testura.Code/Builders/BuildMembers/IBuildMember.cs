@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿namespace Testura.Code.Builders.BuildMembers;
 
-namespace Testura.Code.Builders.BuildMembers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public interface IBuildMember
 {

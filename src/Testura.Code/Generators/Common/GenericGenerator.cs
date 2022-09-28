@@ -1,15 +1,15 @@
-﻿using System.Text;
+﻿namespace Testura.Code.Generators.Common;
+
+using System.Text;
+using Extensions.Naming;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Extensions.Naming;
-
-namespace Testura.Code.Generators.Common;
 
 internal static class GenericGenerator
 {
     /// <summary>
-    /// Create the syntax for a generic type
+    ///     Create the syntax for a generic type
     /// </summary>
     /// <param name="name">Name the base (for example List)</param>
     /// <param name="genericTypes">The generic types</param>
@@ -23,13 +23,14 @@ internal static class GenericGenerator
 
         if (name.Contains('`'))
         {
-            name = name.Split('`').First();
+            name = name.Split('`')
+                .First();
         }
 
-        return
-            SyntaxFactory.GenericName(SyntaxFactory.Identifier(name))
-                .WithTypeArgumentList(
-                    SyntaxFactory.TypeArgumentList(SyntaxFactory.SeparatedList<TypeSyntax>(GetGenericTypes(genericTypes))));
+        return SyntaxFactory.GenericName(SyntaxFactory.Identifier(name))
+            .WithTypeArgumentList(
+                SyntaxFactory.TypeArgumentList(
+                    SyntaxFactory.SeparatedList<TypeSyntax>(GetGenericTypes(genericTypes))));
     }
 
     internal static string ConvertGenericTypeName(Type type)
@@ -41,8 +42,15 @@ internal static class GenericGenerator
 
         var sb = new StringBuilder();
         sb.Append(type.Name[..type.Name.LastIndexOf("`", StringComparison.Ordinal)]);
-        sb.Append(type.GetGenericArguments().Aggregate("<", (aggregate, genericType) => aggregate + (aggregate == "<" ? string.Empty : ",") + ConvertGenericTypeName(genericType)));
+        sb.Append(
+            type.GetGenericArguments()
+                .Aggregate(
+                    "<",
+                    (aggregate, genericType) => aggregate +
+                                                (aggregate == "<" ? string.Empty : ",") +
+                                                ConvertGenericTypeName(genericType)));
         sb.Append(">");
+
         return sb.ToString();
     }
 
@@ -56,6 +64,7 @@ internal static class GenericGenerator
         }
 
         list.RemoveAt(list.Count - 1);
+
         return list.ToArray();
     }
 }

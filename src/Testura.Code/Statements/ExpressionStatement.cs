@@ -1,25 +1,27 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Generators.Common;
-using Testura.Code.Generators.Common.Arguments.ArgumentTypes;
-using Testura.Code.Models;
-using Testura.Code.Models.References;
+﻿namespace Testura.Code.Statements;
 
-namespace Testura.Code.Statements;
+using Generators.Common;
+using Generators.Common.Arguments.ArgumentTypes;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Models;
+using Models.References;
 
 /// <summary>
-/// Provides the functionality to generate expression statements.
+///     Provides the functionality to generate expression statements.
 /// </summary>
 public class ExpressionStatement
 {
     /// <summary>
-    /// Create the expression statement syntax to invoke a method on variable.
+    ///     Create the expression statement syntax to invoke a method on variable.
     /// </summary>
     /// <param name="variableName">The variable name.</param>
     /// <param name="methodName">The method we want to call.</param>
     /// <param name="arguments">Arguments that we end to the method.</param>
     /// <param name="generics">Optional list of types if the method is generic.</param>
     /// <returns>A invocation object with both statement and expression.</returns>
-    public Invocation Invoke(string variableName, string methodName, IEnumerable<IArgument> arguments = null, IEnumerable<Type> generics = null)
+    public Invocation Invoke(
+        string variableName, string methodName, IEnumerable<IArgument> arguments = null,
+        IEnumerable<Type> generics = null)
     {
         if (string.IsNullOrEmpty(variableName))
         {
@@ -31,17 +33,22 @@ public class ExpressionStatement
             throw new ArgumentException("Value cannot be null or empty.", nameof(methodName));
         }
 
-        return Invoke(new VariableReference(variableName, new MethodReference(methodName, arguments, generics)));
+        return Invoke(
+            new VariableReference(
+                variableName,
+                new MethodReference(methodName, arguments, generics)));
     }
 
     /// <summary>
-    /// Create the expression statement syntax to invoke a method.
+    ///     Create the expression statement syntax to invoke a method.
     /// </summary>
     /// <param name="methodName">The method we want to call.</param>
     /// <param name="arguments">Arguments that we end to the method.</param>
     /// <param name="generics">Optional list of types if the method is generic.</param>
     /// <returns>A invocation object with both statement and expression.</returns>
-    public Invocation Invoke(string methodName, IEnumerable<IArgument> arguments = null, IEnumerable<Type> generics = null)
+    public Invocation Invoke(
+        string methodName, IEnumerable<IArgument> arguments = null,
+        IEnumerable<Type> generics = null)
     {
         if (string.IsNullOrEmpty(methodName))
         {
@@ -52,7 +59,8 @@ public class ExpressionStatement
     }
 
     /// <summary>
-    /// Create the expression statement syntax to invoke a method in a chain (for example <c>myVariable.myProperty.MyMethod()</c>)
+    ///     Create the expression statement syntax to invoke a method in a chain (for example
+    ///     <c>myVariable.myProperty.MyMethod()</c>)
     /// </summary>
     /// <param name="reference">The reference chain.</param>
     /// <returns>A invocation object with both statement and expression.</returns>
@@ -68,7 +76,8 @@ public class ExpressionStatement
             var member = reference.GetLastMember();
             if (member is not MethodReference)
             {
-                throw new ArgumentException($"{nameof(reference)} or last member in chain must be a method reference");
+                throw new ArgumentException(
+                    $"{nameof(reference)} or last member in chain must be a method reference");
             }
         }
 

@@ -1,12 +1,12 @@
 ﻿namespace Testura.Code.Models.Properties;
 
 /// <summary>
-/// Represent an auto property.
+///     Represent an auto property.
 /// </summary>
 public class AutoProperty : Property
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="AutoProperty"/> class.
+    ///     Initializes a new instance of the <see cref="AutoProperty" /> class.
     /// </summary>
     /// <param name="name">Name of the property.</param>
     /// <param name="type">The property type.</param>
@@ -17,13 +17,9 @@ public class AutoProperty : Property
     /// <param name="setModifiers">The set modifiers.</param>
     /// <param name="summary">XML documentation summary</param>
     public AutoProperty(
-        string name,
-        Type type,
-        PropertyTypes propertyType,
-        IEnumerable<Modifiers> modifiers = null,
-        IEnumerable<Attribute> attributes = null,
-        IEnumerable<Modifiers> getModifiers = null,
-        IEnumerable<Modifiers> setModifiers = null,
+        string name, Type type, PropertyTypes propertyType,
+        IEnumerable<Modifiers> modifiers = null, IEnumerable<Attribute> attributes = null,
+        IEnumerable<Modifiers> getModifiers = null, IEnumerable<Modifiers> setModifiers = null,
         string summary = null)
         : base(name, type, modifiers, attributes, getModifiers, setModifiers, summary)
     {
@@ -31,7 +27,7 @@ public class AutoProperty : Property
     }
 
     /// <summary>
-    /// Gets or sets if the property is a get or set.
+    ///     Gets or sets if the property is a get or set.
     /// </summary>
     public PropertyTypes PropertyType { get; set; }
 }

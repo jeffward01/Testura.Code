@@ -1,7 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿namespace Testura.Code.Builders.BuildMembers;
 
-namespace Testura.Code.Builders.BuildMembers;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 public class FieldBuildMember : IBuildMember
 {
@@ -12,7 +12,8 @@ public class FieldBuildMember : IBuildMember
         _fieldDeclarationSyntaxs = fieldDeclarationSyntaxs;
     }
 
-    public SyntaxList<MemberDeclarationSyntax> AddMember(SyntaxList<MemberDeclarationSyntax> members)
+    public SyntaxList<MemberDeclarationSyntax> AddMember(
+        SyntaxList<MemberDeclarationSyntax> members)
     {
         foreach (var fieldDeclarationSyntax in _fieldDeclarationSyntaxs)
         {

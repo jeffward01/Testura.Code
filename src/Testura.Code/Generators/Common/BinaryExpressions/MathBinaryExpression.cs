@@ -1,51 +1,55 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Factories;
-using Testura.Code.Models.References;
-using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Testura.Code.Generators.Common.BinaryExpressions;
 
+using Factories;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Models.References;
+
 /// <summary>
-/// Provides the functionality to generate binary expressions with math operators
+///     Provides the functionality to generate binary expressions with math operators
 /// </summary>
 public class MathBinaryExpression : IBinaryExpression
 {
-    private readonly MathOperators _mathOperator;
-    private readonly bool _useParentheses;
     private readonly ExpressionSyntax _leftExpression;
+    private readonly MathOperators _mathOperator;
     private readonly ExpressionSyntax _rightExpression;
+    private readonly bool _useParentheses;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MathBinaryExpression"/> class.
+    ///     Initializes a new instance of the <see cref="MathBinaryExpression" /> class.
     /// </summary>
     /// <param name="leftExpression">The left expression.</param>
     /// <param name="rightExpression">The right expression.</param>
     /// <param name="mathOperator">The math operator to generate.</param>
-    /// <param name="useParentheses">If we should generate with parentheses surrounding the the binary expression.</param>
+    /// <param name="useParentheses">
+    ///     If we should generate with parentheses surrounding the the binary
+    ///     expression.
+    /// </param>
     public MathBinaryExpression(
-        ExpressionSyntax leftExpression,
-        ExpressionSyntax rightExpression,
-        MathOperators mathOperator,
-        bool useParentheses = false)
+        ExpressionSyntax leftExpression, ExpressionSyntax rightExpression,
+        MathOperators mathOperator, bool useParentheses = false)
     {
         _leftExpression = leftExpression ?? throw new ArgumentNullException(nameof(leftExpression));
-        _rightExpression = rightExpression ?? throw new ArgumentNullException(nameof(rightExpression));
+        _rightExpression =
+            rightExpression ?? throw new ArgumentNullException(nameof(rightExpression));
         _mathOperator = mathOperator;
         _useParentheses = useParentheses;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MathBinaryExpression"/> class.
+    ///     Initializes a new instance of the <see cref="MathBinaryExpression" /> class.
     /// </summary>
     /// <param name="leftReference">The left reference</param>
     /// <param name="rightReference">The right reference</param>
     /// <param name="mathOperator">The math operator to generate</param>
-    /// <param name="useParentheses">If we should generate with parentheses surrounding the the binary expression</param>
+    /// <param name="useParentheses">
+    ///     If we should generate with parentheses surrounding the the binary
+    ///     expression
+    /// </param>
     public MathBinaryExpression(
-        VariableReference leftReference,
-        VariableReference rightReference,
-        MathOperators mathOperator,
-        bool useParentheses = false)
+        VariableReference leftReference, VariableReference rightReference,
+        MathOperators mathOperator, bool useParentheses = false)
     {
         if (leftReference == null)
         {
@@ -64,17 +68,18 @@ public class MathBinaryExpression : IBinaryExpression
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="MathBinaryExpression"/> class.
+    ///     Initializes a new instance of the <see cref="MathBinaryExpression" /> class.
     /// </summary>
     /// <param name="leftReference">The left reference.</param>
     /// <param name="rightBinaryExpression">The right other binary expression.</param>
     /// <param name="mathOperator">The math operator to generate.</param>
-    /// <param name="useParentheses">If we should generate with parentheses surrounding the the binary expression.</param>
+    /// <param name="useParentheses">
+    ///     If we should generate with parentheses surrounding the the binary
+    ///     expression.
+    /// </param>
     public MathBinaryExpression(
-        VariableReference leftReference,
-        MathBinaryExpression rightBinaryExpression,
-        MathOperators mathOperator,
-        bool useParentheses = false)
+        VariableReference leftReference, MathBinaryExpression rightBinaryExpression,
+        MathOperators mathOperator, bool useParentheses = false)
     {
         if (leftReference == null)
         {
@@ -93,12 +98,15 @@ public class MathBinaryExpression : IBinaryExpression
     }
 
     /// <summary>
-    /// Get the generated binary expression.
+    ///     Get the generated binary expression.
     /// </summary>
     /// <returns>The generated binary expression.</returns>
     public ExpressionSyntax GetBinaryExpression()
     {
-        var binaryExpression = BinaryExpression(MathOperatorFactory.GetSyntaxKind(_mathOperator), _leftExpression, _rightExpression);
+        var binaryExpression = BinaryExpression(
+            MathOperatorFactory.GetSyntaxKind(_mathOperator),
+            _leftExpression,
+            _rightExpression);
         if (_useParentheses)
         {
             return ParenthesizedExpression(binaryExpression);

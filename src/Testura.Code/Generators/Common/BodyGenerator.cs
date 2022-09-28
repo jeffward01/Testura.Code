@@ -1,15 +1,15 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿namespace Testura.Code.Generators.Common;
+
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Testura.Code.Generators.Common;
-
 /// <summary>
-/// Provides the functionality to generate body/block.
+///     Provides the functionality to generate body/block.
 /// </summary>
 public static class BodyGenerator
 {
     /// <summary>
-    /// Create the syntax for a method/loop body with multiple statement lines.
+    ///     Create the syntax for a method/loop body with multiple statement lines.
     /// </summary>
     /// <param name="statements">Statements in the body.</param>
     /// <returns>The declared block syntax.</returns>

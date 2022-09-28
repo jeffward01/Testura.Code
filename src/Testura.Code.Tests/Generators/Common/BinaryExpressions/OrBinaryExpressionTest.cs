@@ -1,14 +1,14 @@
-﻿using NUnit.Framework;
-using Testura.Code.Generators.Common.BinaryExpressions;
-using Testura.Code.Models.References;
+﻿namespace Testura.Code.Tests.Generators.Common.BinaryExpressions;
 
-namespace Testura.Code.Tests.Generators.Common.BinaryExpressions;
+using Code.Generators.Common.BinaryExpressions;
+using Code.Models.References;
+using NUnit.Framework;
 
 [TestFixture]
 public class OrBinaryExpressionTest
 {
     [Test]
-    public void GetBinaryExpression_WhenHavingTwoConditionalBinaryExpressions_ShouldGenerateCode()
+    public void GetBinaryExpression_WhenHavingAnotherAndExpression_ShouldGenerateCode()
     {
         var leftBinaryExpression = new ConditionalBinaryExpression(
             new ConstantReference(1),
@@ -20,10 +20,16 @@ public class OrBinaryExpressionTest
             new ConstantReference(2),
             ConditionalStatements.LessThan);
 
-        var binaryExpression = new OrBinaryExpression(
+        var orBinaryExpression = new AndBinaryExpression(
             leftBinaryExpression,
             rightBinaryExpression);
-        Assert.AreEqual("1==2||1<2", binaryExpression.GetBinaryExpression().ToString());
+
+        var binaryExpression = new OrBinaryExpression(leftBinaryExpression, orBinaryExpression);
+
+        Assert.AreEqual(
+            "1==2||1==2&&1<2",
+            binaryExpression.GetBinaryExpression()
+                .ToString());
     }
 
     [Test]
@@ -43,15 +49,16 @@ public class OrBinaryExpressionTest
             leftBinaryExpression,
             rightBinaryExpression);
 
-        var binaryExpression = new OrBinaryExpression(
-            leftBinaryExpression,
-            orBinaryExpression);
+        var binaryExpression = new OrBinaryExpression(leftBinaryExpression, orBinaryExpression);
 
-        Assert.AreEqual("1==2||1==2||1<2", binaryExpression.GetBinaryExpression().ToString());
+        Assert.AreEqual(
+            "1==2||1==2||1<2",
+            binaryExpression.GetBinaryExpression()
+                .ToString());
     }
 
     [Test]
-    public void GetBinaryExpression_WhenHavingAnotherAndExpression_ShouldGenerateCode()
+    public void GetBinaryExpression_WhenHavingTwoConditionalBinaryExpressions_ShouldGenerateCode()
     {
         var leftBinaryExpression = new ConditionalBinaryExpression(
             new ConstantReference(1),
@@ -63,14 +70,10 @@ public class OrBinaryExpressionTest
             new ConstantReference(2),
             ConditionalStatements.LessThan);
 
-        var orBinaryExpression = new AndBinaryExpression(
-            leftBinaryExpression,
-            rightBinaryExpression);
-
-        var binaryExpression = new OrBinaryExpression(
-            leftBinaryExpression,
-            orBinaryExpression);
-
-        Assert.AreEqual("1==2||1==2&&1<2", binaryExpression.GetBinaryExpression().ToString());
+        var binaryExpression = new OrBinaryExpression(leftBinaryExpression, rightBinaryExpression);
+        Assert.AreEqual(
+            "1==2||1<2",
+            binaryExpression.GetBinaryExpression()
+                .ToString());
     }
 }

@@ -1,20 +1,20 @@
-﻿using Microsoft.CodeAnalysis;
+﻿namespace Testura.Code.Saver;
+
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Formatting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Testura.Code.Models.Options;
-using Formatter = Microsoft.CodeAnalysis.Formatting.Formatter;
-
-namespace Testura.Code.Saver;
+using Microsoft.CodeAnalysis.Formatting;
+using Models.Options;
 
 /// <summary>
-/// Provides the functionality to save code to file or string.
+///     Provides the functionality to save code to file or string.
 /// </summary>
 public class CodeSaver : ICodeSaver
 {
     private readonly IList<OptionKeyValue> _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CodeSaver"/> class.
+    ///     Initializes a new instance of the <see cref="CodeSaver" /> class.
     /// </summary>
     public CodeSaver()
     {
@@ -22,7 +22,7 @@ public class CodeSaver : ICodeSaver
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CodeSaver"/> class.
+    ///     Initializes a new instance of the <see cref="CodeSaver" /> class.
     /// </summary>
     /// <param name="options">A list with formatting options</param>
     public CodeSaver(IEnumerable<OptionKeyValue> options)
@@ -31,7 +31,7 @@ public class CodeSaver : ICodeSaver
     }
 
     /// <summary>
-    /// Save generated code to a file.
+    ///     Save generated code to a file.
     /// </summary>
     /// <param name="cu">Generated code.</param>
     /// <param name="path">Full output path.</param>
@@ -54,7 +54,7 @@ public class CodeSaver : ICodeSaver
     }
 
     /// <summary>
-    /// Save generated code as a string.
+    ///     Save generated code as a string.
     /// </summary>
     /// <param name="cu">Generated code.</param>
     /// <returns>Generated code as a string.</returns>
@@ -67,6 +67,7 @@ public class CodeSaver : ICodeSaver
 
         var workspace = CreateWorkspace();
         var formattedCode = Formatter.Format(cu, workspace);
+
         return formattedCode.ToFullString();
     }
 
@@ -76,7 +77,11 @@ public class CodeSaver : ICodeSaver
         cw.Options.WithChangedOption(CSharpFormattingOptions.IndentBraces, true);
         foreach (var optionKeyValue in _options)
         {
-            cw.TryApplyChanges(cw.CurrentSolution.WithOptions(cw.Options.WithChangedOption(optionKeyValue.FormattingOption, optionKeyValue.Value)));
+            cw.TryApplyChanges(
+                cw.CurrentSolution.WithOptions(
+                    cw.Options.WithChangedOption(
+                        optionKeyValue.FormattingOption,
+                        optionKeyValue.Value)));
         }
 
         return cw;

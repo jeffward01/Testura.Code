@@ -2,12 +2,12 @@
 namespace Testura.Code.Models.References;
 
 /// <summary>
-/// Represent a null reference.
+///     Represent a null reference.
 /// </summary>
 public class NullReference : VariableReference
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="NullReference"/> class.
+    ///     Initializes a new instance of the <see cref="NullReference" /> class.
     /// </summary>
     public NullReference()
         : base("null")
